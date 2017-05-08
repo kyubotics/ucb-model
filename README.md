@@ -21,4 +21,4 @@ UCB 模型（Universal Chat Bot Model）将一个完整的聊天机器人结构�
 
 ## 图示
 
-![Figure 1](figure1.png)
+![Figure 1](assets/figure1.png)
