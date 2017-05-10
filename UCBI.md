@@ -45,6 +45,9 @@ UCBI 是一个处于 UCB 接口层的接口约定，它对上层提供统一的�
 
 | 字段名 | 数据类型 | 可选值 | 说明 |
 | ----- | ------- | ----- | --- |
+| `platform` | string | - | 聊天平台名称，如 `wechat`、`slack` |
+| `via` | string | - | 翻译层程序名称，如 `coolq-http-api`、`mojo-weixin-openwx` |
+| `config_id` | string | - | 配置 ID |
 | `type` | string | `"private"`、`"group"`、`"discuss"` | 上下文类型，分别为私聊、群组、讨论组 |
 | `user_id` | string | - | 发送者 ID |
 | `user_tid` | string | - | 发送者临时 ID |
@@ -56,6 +59,10 @@ UCBI 是一个处于 UCB 接口层的接口约定，它对上层提供统一的�
 由于某些服务层无法提供真实的用户 ID，而只能提供一个临时的、重启失效的 ID（如 [Mojo-Weixin](https://github.com/sjdy521/Mojo-Weixin)），所以这里也允许使用 `xxx_tid` 来取代 `xxx_id`，但无论如何，此处至少有 `xxx_id` 和 `xxx_tid` 其中之一，否则应认为无上下文，对 `context` 置 `null`。
 
 `context` 字段的内容应当能够直接传给后面「接口调用」的消息发送接口来作为发送目标。
+
+`config_id` 用于标记 UCBI 实现的配置文件中的消息接收源的配置 ID。因为 UCBI 支持同时接入多个翻译层、多个账号，为了能够正确找到当前所需要的适配器，应该有一个唯一的标识来确定和翻译层有关的配置信息。
+
+当 `type` 为 `"group"` 或 `"discuss"` 时，最好同时也给出 `user_id` 或 `user_tid`，来标记消息／通知的发送／触发者。
 
 #### Data 字段
 
@@ -81,6 +88,8 @@ UCBI 是一个处于 UCB 接口层的接口约定，它对上层提供统一的�
 | `discuss_name` | string | - | 讨论组名称 | - |
 | `discuss_markname` | string | - | 讨论组备注名 | 可选 |
 | `discuss` | string | - | 讨论组显示名（当有备注名时为备注名，否则为讨论组真实名称） | - |
+| `message` | TODO
+| 额外字段 | - | - | 某些翻译层特有的信息，字段名应以翻译层程序名称加空格开头 | 可选
 
 「通知」类型的 `data` 内容如下：
 
