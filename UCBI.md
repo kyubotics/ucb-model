@@ -75,12 +75,12 @@ UCBI 是一个处于 UCB 接口层的接口约定，它对上层提供统一的�
 | `group_tid` | string | - | 群组临时 ID |
 | `group_name` | string | - | 群组名称 | - |
 | `group_markname` | string | - | 群组备注名 | 可选 |
-| `group` | string | - | 群组显示名（当有备注名时为备注名，否则为群组真实名称 | - |
+| `group` | string | - | 群组显示名（当有备注名时为备注名，否则为群组真实名称） | - |
 | `discuss_id` | string | - | 讨论组 ID |
 | `discuss_tid` | string | - | 讨论组临时 ID |
 | `discuss_name` | string | - | 讨论组名称 | - |
 | `discuss_markname` | string | - | 讨论组备注名 | 可选 |
-| `discuss` | string | - | 讨论组显示名（当有备注名时为备注名，否则为讨论组真实名称 | - |
+| `discuss` | string | - | 讨论组显示名（当有备注名时为备注名，否则为讨论组真实名称） | - |
 
 「通知」类型的 `data` 内容如下：
 
