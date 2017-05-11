@@ -17,7 +17,7 @@
 | 层次 | 名称 | 功能 |
 | --- | ---- | --- |
 | UCB Layer 4 | 应用层 Application Layer | 提供聊天机器人的实际业务逻辑或其它高抽象层次的框架，如 [XiaoKai Bot](https://github.com/CCZU-DEV/xiaokai-bot) |
-| UCB Layer 3 | 接口层 Interface Layer | 提供统一的交互接口，包括事件的触发和功能的调用，如 [UCBI](UCBI.md) |
+| UCB Layer 3 | 接口层 Interface Layer | 提供统一的交互接口，包括事件的触发和功能的调用，如 [UCBI](UCBI) |
 | UCB Layer 2 | 翻译层 Translation Layer | 在接口层和服务层之间进行协议的转换和翻译，如 [CoolQ HTTP API 插件](https://github.com/richardchien/coolq-http-api) 和 Mojo-Weixin 的 [Openwx 插件](https://metacpan.org/pod/distribution/Mojo-Weixin/lib/Mojo/Weixin.pod#Mojo::Weixin::Plugin::Openwx) |
 | UCB Layer 1 | 服务层 Service Layer | 提供即时聊天账号的实际登录服务，或接入官方的机器人 SDK，如 [QQBot](https://github.com/pandolia/qqbot) 和 [酷 Q](https://cqp.cc/) |
 
