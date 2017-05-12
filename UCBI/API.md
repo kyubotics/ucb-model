@@ -78,4 +78,4 @@ Content-Type: application/json
 
 和之前的所有叙述相同，这里的 `xxx_id` 和 `xxx_tid` 两者有其一即可。另外，ID 相关的参数和 `send_message` 的 `type` 参数，如果在最外层没有，就会去 `context` 中找，因此当把事件的 `context` 直接传入时，最外层无需再传入这些参数，而只需 `message`。
 
-发送消息接口的 `message` 参数的格式和 [消息事件中的 `message`](Event.md#消息类型) 基本相同，其中，消息段格式的 `rich` 格式不支持发送，其它格式是否支持取决于翻译层是否支持。
+发送消息接口的 `message` 参数的格式和 [消息事件中的 `message`](Event.md#消息类型) 基本相同，其中，消息段格式的 `rich` 格式不支持发送，其它格式是否支持取决于翻译层是否支持。同时，支持 `message` 直接传入字符串，将默认作为 `text` 格式发送。
