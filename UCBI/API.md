@@ -3,6 +3,7 @@
 <!-- TOC -->
 
 - [请求的发起方式](#请求的发起方式)
+- [响应](#响应)
 - [接口列表](#接口列表)
 
 <!-- /TOC -->
@@ -56,18 +57,24 @@ Content-Type: application/json
 
 注意这里的 `context` 字段通常是直接把收到的事件的 `context` 传入，如果某些特殊使用场景下需要自行构造，具体必须的字段由 UCBI 的翻译层适配器来指定。
 
+## 响应
+
+接口请求之后如果操作成功会返回状态码 200 或 204，否则，返回 4xx，具体根据情况而定，由 UCBI 实现确定。
+
+响应的正文如果有，则同样使用 JSON 格式，直接包含所请求的数据，而不用包含类似 `code`、`data` 这样的成功与否的标记。
+
 ## 接口列表
 
 下面给出接口所支持的 `action` 值和所需的参数：
 
-| `action` 字段值 | 说明 | 所需参数 |
-| -------------- | --- | ------- |
-| `get_login_info` | 获取登录号信息 | 无 |
-| `send_private_message` | 发送私聊消息 | `user_id`：目标用户 ID<br>`user_tid`：目标用户临时 ID<br>`message`：消息内容 |
-| `send_group_message` | 发送群组消息 | `group_id`：目标群组 ID<br>`group_tid`：目标群组临时 ID<br>`message`：消息内容 |
-| `send_discuss_message` | 发送讨论组消息 | `discuss_id`：目标讨论组 ID<br>`discuss_tid`：目标讨论组临时 ID<br>`message`：消息内容 |
-| `send_message` | 发送消息 | `type`：消息类型，`private`、`group`、`discuss` 之一<br>其它所需的相关 ID<br>`message`：消息内容 |
-| 其它接口 | 其它某些翻译层特有的接口，以星号（`*`）开头，如 `*get_group_member_list` | 由具体接口确定 |
+| `action` 字段值 | 说明 | 所需参数 | 响应数据 |
+| -------------- | --- | ------- | ------- |
+| `get_login_info` | 获取登录号信息 | 无 | `user_id`：ID<br>`user_tid`：临时 ID<br>`user_name`：昵称／用户名
+| `send_private_message` | 发送私聊消息 | `user_id`：目标用户 ID<br>`user_tid`：目标用户临时 ID<br>`message`：消息内容 | 无 |
+| `send_group_message` | 发送群组消息 | `group_id`：目标群组 ID<br>`group_tid`：目标群组临时 ID<br>`message`：消息内容 | 无 |
+| `send_discuss_message` | 发送讨论组消息 | `discuss_id`：目标讨论组 ID<br>`discuss_tid`：目标讨论组临时 ID<br>`message`：消息内容 | 无 |
+| `send_message` | 发送消息 | `type`：消息类型，`private`、`group`、`discuss` 之一<br>其它所需的相关 ID<br>`message`：消息内容 | 无 |
+| 其它接口 | 其它某些翻译层特有的接口，以星号（`*`）开头，如 `*get_group_member_list` | 由具体接口确定 | - |
 
 和之前的所有叙述相同，这里的 `xxx_id` 和 `xxx_tid` 两者有其一即可。另外，ID 相关的参数和 `send_message` 的 `type` 参数，如果在最外层没有，就会去 `context` 中找，因此当把事件的 `context` 直接传入时，最外层无需再传入这些参数，而只需 `message`。
 
