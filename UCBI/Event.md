@@ -37,7 +37,7 @@
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | --- |
-| `type` | string | 事件类型，值为 `"message"` 或 `"notice"`，对应前面的事件分类 |
+| `type` | string | 事件类型，值为 `message` 或 `notice`，对应前面的事件分类 |
 | `time` | number | 事件发生的时间戳 |
 | `context` | object | 事件发生的上下文，通过这项必须可以直接唯一确定回复时的发送目标，若无上下文，则 `null` |
 | `data` | object | 事件的实际信息，随事件类型的不同而不同 |
@@ -50,7 +50,7 @@
 | ----- | ------- | --- |
 | `platform` | string | 聊天平台名称，如 `wechat`、`slack` |
 | `via` | string | 翻译层程序名称，如 `coolq-http-api`、`mojo-weixin-openwx` |
-| `type` | string | 上下文类型，值为 `"private"`、`"group"`、`"discuss"`，分别为私聊、群组、讨论组 |
+| `type` | string | 上下文类型，值为 `private`、`group`、`discuss`，分别为私聊、群组、讨论组 |
 | `user_id` | string | 发送者 ID |
 | `user_tid` | string | 发送者临时 ID |
 | `group_id` | string | 群组 ID |
@@ -63,9 +63,9 @@
 
 `context` 字段的内容应当能够直接传给后面「接口调用」的消息发送接口来作为发送目标。
 
-当 `type` 为 `"group"` 或 `"discuss"` 时，最好同时也给出 `user_id` 或 `user_tid`，来标记消息／通知的发送／触发者。
+当 `type` 为 `group` 或 `discuss` 时，最好同时也给出 `user_id` 或 `user_tid`，来标记消息／通知的发送／触发者。
 
-`extra` 用于标记 UCBI 具体实现可能会需要的额外信息，例如消息接受源的唯一标识等，从而可以在 HTTP 无状态的情况下，对回复消息的发送途径进行确定。
+`extra` 用于标记 UCBI 具体实现可能会需要的额外信息，例如消息接受源的唯一标识等，从而可以在 HTTP 无状态的情况下，对回复消息的发送途径进行确定。它具体包含的内容会由 UCBI 具体实现的适配器来确定。
 
 ### Data 字段
 
@@ -75,7 +75,7 @@
 
 | 字段名 | 数据类型 | 说明 | 备注 |
 | ----- | ------- | --- | --- |
-| `type` | string | 消息类型，值为 `"private"`、`"group"`、`"discuss"`，分别为私聊、群组、讨论组 | - |
+| `type` | string | 消息类型，值为 `private`、`group`、`discuss`，分别为私聊、群组、讨论组 | - |
 | `message` | array | 通过一种可扩展的方式来表示多种形式的消息内容，后面具体给出 | - |
 | `sender_id` | string | 发送者 ID | - |
 | `sender_tid` | string | 发送者临时 ID | - |
@@ -92,6 +92,7 @@
 | `discuss_name` | string | 讨论组名称 | 可选 |
 | `discuss_markname` | string | 讨论组备注名 | 可选 |
 | `discuss` | string | 讨论组显示名（当有备注名时为备注名，否则为讨论组真实名称） | 可选 |
+| `sender_role` | string | 发送者身份，仅当群消息或讨论组消息时存在，值为 `member`、`admin`、`owner`、`unknown`，分别对应普通成员、管理员、群主、未知（无法获得） |
 | 额外字段 | - | 对于某些翻译层特有的信息，允许使用额外字段来记录，字段名应以星号（`*`）开头，如 `*receiver` | 可选 |
 
 `message` 是一个 JSON 数组，之所以用数组类型，是因为某些服务层可以支持多种内容混杂在一条消息中，例如 QQ 允许图片、文字、表情混在一起发送，如果采用在消息中通过特殊格式来标记的形式表示，则通常需要对其它普通文字进行转义（如 [酷 Q](https://cqp.cc/) 的「CQ 码」），这会对消息的解读造成不便，因此这里使用数组来对消息进行分段表示，每一段都是一段纯文字、一张图片等。
