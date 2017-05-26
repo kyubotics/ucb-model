@@ -69,7 +69,7 @@ Content-Type: application/json
 
 | `action` 字段值 | 说明 | 所需参数 | 响应数据 |
 | -------------- | --- | ------- | ------- |
-| `get_login_info` | 获取登录号信息 | 无 | `user_id`：ID<br>`user_tid`：临时 ID<br>`user_name`：昵称／用户名
+| `get_login_info` | 获取登录号信息 | 无 | `user_id`：ID<br>`user_tid`：临时 ID<br>`user_name`：昵称／用户名 |
 | `send_private_message` | 发送私聊消息 | `user_id`：目标用户 ID<br>`user_tid`：目标用户临时 ID<br>`message`：消息内容 | 无 |
 | `send_group_message` | 发送群组消息 | `group_id`：目标群组 ID<br>`group_tid`：目标群组临时 ID<br>`message`：消息内容 | 无 |
 | `send_discuss_message` | 发送讨论组消息 | `discuss_id`：目标讨论组 ID<br>`discuss_tid`：目标讨论组临时 ID<br>`message`：消息内容 | 无 |
