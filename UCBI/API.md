@@ -49,8 +49,15 @@ Content-Type: application/json
         }
     },
     "message": [
-        ["text", "你好啊～"],
-        ["image", "[图片]", {"path": "/tmp/pic.jpg"}]
+        {
+            "type": "text",
+            "text": "你好啊～"
+        },
+        {
+            "type": "image",
+            "text": "[图片]",
+            "data": {"path": "/tmp/pic.jpg"}
+        }
     ]
 }
 ```
