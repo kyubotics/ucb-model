@@ -115,7 +115,7 @@
 | `audio` | 语音／音频 | 同上 |
 | `video` | 视频 | 同上 |
 | `file` | 文件 | 同上 |
-| `link` | 卡片链接（不同于纯文本的链接） | `url`：链接地址<br>`title`：标题<br>`description`：描述<br>`image`：图片链接，可选 |
+| `link` | 卡片链接（不同于纯文本的链接） | `url`：链接地址<br>`title`：标题<br>`content`：内容预览<br>`image`：图片链接，可选 |
 | `location` | 位置／地址 | `latitude`：纬度<br>`longitude`：经度<br>`description`：地址的文字表示，可选 |
 | `contact` | 联系人名片 | `user_id`：用户 ID<br>`user_tid`：用户临时 ID<br>`user_name`：用户昵称／用户名，可选 |
 | `group` | 群组名片 | `group_id`：群组 ID<br>`group_tid`：群组临时 ID<br>`group_name`：群组名称，可选 |
