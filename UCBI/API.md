@@ -12,7 +12,7 @@
 
 ## 请求的发起方式
 
-由于 UCBI 的实现需要确定当前调用需要指派给哪个开放层的适配器，因此每个调用都需要传入一个 `context`，这个 `context` 的含义和 [事件的 `context` 字段](Event.md#context-字段) 是一样的，因此比较合理的妥协是所有接口调用全部采用 POST 请求。并且，为了支持可扩展接口，需要执行的操作不应该放在 URL 路径中，而应该直接放在 POST 正文中的 `action` 字段，和 `context` 一同发送，作为一个 JSON 字符串，它可以拥有更高的自由度。而操作所需的参数，作为其它字段传入。
+由于 UCBI 的实现需要确定当前调用需要指派给哪个开放层的适配器，因此每个调用都需要传入一个 `context`，这个 `context` 的含义和 [事件的 `context` 字段](Event.md#context-字段) 是一样的，因此比较合理的妥协是所有接口调用全部采用 POST 请求。并且，为了支持可扩展接口，需要执行的操作不应该放在 URL 路径中，而应该直接放在 POST 正文中的 `action` 字段，和 `context` 一同发送，作为一个 JSON 字符串，它可以拥有更高的自由度。而操作所需的参数，组成 JSON 对象作为 `params` 字段传入。
 
 有了前面的说明，接口调用的过程就非常清晰了，假设一个 UCBI 的实现，将接口的地址配置为根路径 `/`，IP、端口为 `127.0.0.1:8080`，则一个「获取登录号信息」的调用的 HTTP 请求可能是这样：
 
@@ -48,17 +48,19 @@ Content-Type: application/json
             "config_id": 2
         }
     },
-    "message": [
-        {
-            "type": "text",
-            "text": "你好啊～"
-        },
-        {
-            "type": "image",
-            "text": "[图片]",
-            "data": {"path": "/tmp/pic.jpg"}
-        }
-    ]
+    "params": {
+        "message": [
+            {
+                "type": "text",
+                "text": "你好啊～"
+            },
+            {
+                "type": "image",
+                "text": "[图片]",
+                "data": {"path": "/tmp/pic.jpg"}
+            }
+        ]
+    }
 }
 ```
 
@@ -74,7 +76,7 @@ Content-Type: application/json
 
 下面给出接口所支持的 `action` 值和所需的参数：
 
-| `action` 字段值 | 说明 | 所需参数 | 响应数据 |
+| `action` 字段值 | 说明 | `params` 的内容 | 响应数据 |
 | -------------- | --- | ------- | ------- |
 | `get_login_info` | 获取登录号信息 | 无 | `user_id`：ID<br>`user_tid`：临时 ID<br>`user_name`：昵称／用户名 |
 | `send_private_message` | 发送私聊消息 | `user_id`：目标用户 ID<br>`user_tid`：目标用户临时 ID<br>`message`：消息内容 | 无 |
@@ -83,6 +85,6 @@ Content-Type: application/json
 | `send_message` | 发送消息 | `type`：消息类型，`private`、`group`、`discuss` 之一<br>其它所需的相关 ID<br>`message`：消息内容 | 无 |
 | 其它接口 | 其它某些开放层特有的接口，以星号（`*`）开头，如 `*get_group_member_list` | 由具体接口确定 | - |
 
-和之前的所有叙述相同，这里的 `xxx_id` 和 `xxx_tid` 两者有其一即可。另外，ID 相关的参数和 `send_message` 的 `type` 参数，如果在最外层没有，就会去 `context` 中找，因此当把事件的 `context` 直接传入时，最外层无需再传入这些参数，而只需 `message`。
+和之前的所有叙述相同，这里的 `xxx_id` 和 `xxx_tid` 两者有其一即可。另外，ID 相关的参数和 `send_message` 的 `type` 参数，如果在 `params` 中没有，就会去 `context` 中找，因此当把事件的 `context` 直接传入时，`params` 中无需再传入这些参数，而只需 `message`。
 
 发送消息接口的 `message` 参数的格式和 [消息事件中的 `message`](Event.md#消息类型) 基本相同，其中，消息段格式的 `rich` 格式不支持发送，其它格式是否支持取决于开放层是否支持。同时，支持 `message` 直接传入字符串，将默认作为 `text` 格式发送。
