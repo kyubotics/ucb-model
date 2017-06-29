@@ -59,9 +59,11 @@
 | `discuss_tid` | string | 讨论组临时 ID |
 | `extra` | - | 其它附加信息 |
 
-由于某些服务层无法提供真实的用户 ID，而只能提供一个临时的、重启失效的 ID（如 [Mojo-Weixin](https://github.com/sjdy521/Mojo-Weixin)），所以这里也允许使用 `xxx_tid` 来取代 `xxx_id`，但无论如何，此处至少有 `xxx_id` 和 `xxx_tid` 其中之一，否则应认为无上下文，对 `context` 置 `null`。
+由于某些服务层无法提供真实的用户 ID，而只能提供一个临时的、重启失效的 ID（如 [Mojo-Weixin](https://github.com/sjdy521/Mojo-Weixin)），所以这里也允许使用 `xxx_tid` 来取代 `xxx_id`。
 
 `context` 字段的内容应当能够直接传给后面「接口调用」的消息发送接口来作为发送目标。
+
+对于有可能存在的特殊情况，在事件没有 `user_id` 等 ID 字段时，`context` 中至少应当有 `platform`、`via`、`extra`，从而可以在调用非发送消息类接口时使用。
 
 当 `type` 为 `group` 或 `discuss` 时，最好同时也给出 `user_id` 或 `user_tid`，来标记消息／通知的发送／触发者。
 
